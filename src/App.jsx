@@ -1,6 +1,5 @@
-import { Suspense, lazy, useEffect, useState } from "react";
-
-const CrystalOrbScene = lazy(() => import("./components/CrystalOrbScene.jsx"));
+import { useEffect, useState } from "react";
+import CrystalOrbScene from "./components/CrystalOrbScene.jsx";
 
 const TELEGRAM_PAY = "https://t.me/MysteriumTechBot";
 const TELEGRAM_HELP = "https://t.me/SecretumHelp_bot";
@@ -73,9 +72,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Suspense fallback={null}>
-        <CrystalOrbScene />
-      </Suspense>
+      <CrystalOrbScene />
       <div className="ambient-mesh" aria-hidden="true" />
 
       <header className={`topbar ${scrolled ? "topbar--scrolled" : ""}`}>

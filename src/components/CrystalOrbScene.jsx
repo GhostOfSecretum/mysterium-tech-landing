@@ -25,7 +25,8 @@ export default function CrystalOrbScene() {
       alpha: true,
       powerPreference: "high-performance",
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Ограничиваем pixel ratio для повышения производительности (особенно на мобильных)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     container.appendChild(renderer.domElement);
 
@@ -315,8 +316,12 @@ export default function CrystalOrbScene() {
       camera.position.z = scrollState.cameraZ;
       camera.lookAt(0, 0, 0);
 
-      // Pass phase mix to CSS
-      document.documentElement.style.setProperty("--phase-mix", scrollState.progress.toFixed(3));
+      // Pass phase mix to CSS only if changed
+      const currentProgress = scrollState.progress.toFixed(3);
+      if (currentProgress !== scrollState._lastProgress) {
+        document.documentElement.style.setProperty("--phase-mix", currentProgress);
+        scrollState._lastProgress = currentProgress;
+      }
 
       renderer.render(scene, camera);
       rafId = requestAnimationFrame(tick);
