@@ -1,42 +1,24 @@
 import { useEffect, useState } from "react";
-import CrystalOrbScene from "./components/CrystalOrbScene.jsx";
+import SceneSwitcher from "./components/SceneSwitcher.jsx";
 
 const TELEGRAM_PAY = "https://t.me/MysteriumTechBot";
 const TELEGRAM_HELP = "https://t.me/SecretumHelp_bot";
+const TELEGRAM_CONTACT = "https://t.me/GhostOfSecretum";
+const TELEGRAM_PROXY =
+  "tg://proxy?server=prox.secsoc.tech&port=443&secret=ee96887fbfcb117e0c8319f8fc0cfef61370726f782e736563736f632e74656368";
+const PORTAL_NAME = "Secretum & Mysterium Tech Portal";
 
-const plans = [
-  {
-    title: "1 месяц",
-    price: "300",
-    note: "Идеально для старта",
-    highlight: false,
-  },
-  {
-    title: "6 месяцев",
-    price: "1500",
-    note: "Оптимальный баланс цены",
-    highlight: false,
-  },
-  {
-    title: "1 год",
-    price: "2900",
-    note: "Лучшая стоимость за месяц",
-    highlight: true,
-  },
-];
-
-const features = [
-  "Высокая скорость подключения без просадок",
-  "4 страны на выбор: США, Латвия, Нидерланды, Швеция",
-  "Поддержка до 3 устройств одновременно",
-  "Пробный период 5 дней без риска",
-  "Оплата в Telegram: карта, СБП, крипта",
-  "Оперативная поддержка через отдельный бот",
+const SCENES = [
+  { id: "grid", label: "Матрица" },
+  { id: "chrome", label: "Хром" },
+  { id: "ripple", label: "Риппл" },
+  { id: "streams", label: "Потоки" },
 ];
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeScene, setActiveScene] = useState("grid");
 
   useEffect(() => {
     const revealElements = Array.from(document.querySelectorAll("[data-reveal]"));
@@ -72,21 +54,30 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <CrystalOrbScene />
+      <SceneSwitcher activeScene={activeScene} />
       <div className="ambient-mesh" aria-hidden="true" />
 
       <header className={`topbar ${scrolled ? "topbar--scrolled" : ""}`}>
         <div className="topbar__inner">
           <a className="brand" href="#hero" onClick={closeMenu}>
             <span className="brand__dot" />
-            <span>Mysterium Tech</span>
+            <span>{PORTAL_NAME}</span>
           </a>
 
           <nav className="desktop-nav">
-            <a href="#benefits">Преимущества</a>
-            <a href="#pricing">Тарифы</a>
-            <a href="#bots">Telegram-боты</a>
-            <a href="#sites">Сайты</a>
+            <div className="nav-services">
+              <button type="button" className="nav-services__trigger">
+                Услуги
+              </button>
+              <div className="nav-services__menu">
+                <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
+                  Разработка ботов
+                </a>
+                <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
+                  Разработка сайтов
+                </a>
+              </div>
+            </div>
           </nav>
 
           <a className="cta cta--small" href={TELEGRAM_PAY} target="_blank" rel="noreferrer">
@@ -106,18 +97,15 @@ export default function App() {
       </header>
 
       <div className={`mobile-nav ${menuOpen ? "mobile-nav--open" : ""}`}>
-        <a href="#benefits" onClick={closeMenu}>
-          Преимущества
-        </a>
-        <a href="#pricing" onClick={closeMenu}>
-          Тарифы
-        </a>
-        <a href="#bots" onClick={closeMenu}>
-          Telegram-боты
-        </a>
-        <a href="#sites" onClick={closeMenu}>
-          Сайты
-        </a>
+        <div className="mobile-nav__group">
+          <p>Услуги</p>
+          <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer" onClick={closeMenu}>
+            Разработка ботов
+          </a>
+          <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer" onClick={closeMenu}>
+            Разработка сайтов
+          </a>
+        </div>
         <a href={TELEGRAM_PAY} target="_blank" rel="noreferrer" onClick={closeMenu}>
           Перейти к оплате
         </a>
@@ -127,127 +115,105 @@ export default function App() {
         <section className="hero phase" id="hero">
           <div className="container hero__layout">
             <div className="hero__content" data-reveal>
-              <p className="eyebrow">VPN нового поколения</p>
-              <h1>
-                Надежный VPN от <span>Mysterium Tech</span> для ежедневной свободы в сети
-              </h1>
-              <p className="hero__lead">
-                Подключайтесь за минуту, тестируйте сервис 5 дней бесплатно, оплачивайте удобным способом прямо
-                в Telegram-боте.
-              </p>
+              <p className="eyebrow">Единый портал поддержки клиентов</p>
+              <h1>Управляй подписками и получай помощь в одном месте</h1>
               <div className="hero__actions">
                 <a className="cta" href={TELEGRAM_PAY} target="_blank" rel="noreferrer">
                   Подключить VPN
                 </a>
-                <a className="cta cta--ghost" href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
+                <a className="cta" href="https://t.me/SecretumHelp_bot" target="_blank" rel="noreferrer">
                   Поддержка
                 </a>
               </div>
             </div>
-
-            <div className="hero__glass" data-reveal>
-              <h3>Что входит</h3>
-              <ul>
-                <li>4 страны: США, Латвия, Нидерланды, Швеция</li>
-                <li>До 3 устройств на одном доступе</li>
-                <li>Стабильная высокая скорость</li>
-                <li>5 дней пробного периода</li>
-              </ul>
-            </div>
           </div>
         </section>
 
-        <section className="section phase" id="benefits">
+        <section className="section section--secretum phase" id="secretum">
           <div className="container">
-            <div className="section__head" data-reveal>
-              <p className="eyebrow">Преимущества VPN</p>
-              <h2>Прозрачные условия и понятный результат</h2>
-            </div>
-
-            <div className="feature-grid">
-              {features.map((item) => (
-                <article key={item} className="glass-card" data-reveal>
-                  <p>{item}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section phase" id="pricing">
-          <div className="container">
-            <div className="section__head" data-reveal>
-              <p className="eyebrow">Тарифы</p>
-              <h2>Выберите удобный формат подключения</h2>
-            </div>
-
-            <div className="pricing-grid">
-              {plans.map((plan) => (
-                <article key={plan.title} className={`price-card ${plan.highlight ? "price-card--featured" : ""}`} data-reveal>
-                  <h3>{plan.title}</h3>
-                  <p className="price-card__price">
-                    {plan.price}
-                    <span>₽</span>
-                  </p>
-                  <p className="price-card__note">{plan.note}</p>
-                  <a href={TELEGRAM_PAY} target="_blank" rel="noreferrer" className="cta cta--block">
-                    Оплатить в боте
+            <div className="secretum-stack">
+              <div className="secretum-panel" data-reveal>
+                <p className="eyebrow">Secretum</p>
+                <h2>
+                  Единая точка входа для подключения и поддержки <span style={{ color: "#40E0D0" }}>Secretum</span>
+                </h2>
+                <p className="secretum-panel__text">
+                  Для начала подключите Proxy Telegram для доступа к боту и функциям Telegram.
+                </p>
+                <div className="secretum-panel__actions">
+                  <a className="cta" href={TELEGRAM_PROXY}>
+                    Proxy Telegram
                   </a>
-                </article>
-              ))}
-            </div>
+                  <a className="cta" href="https://t.me/wgitzbot" target="_blank" rel="noreferrer">
+                    Подключиться
+                  </a>
+                  <a className="cta" href="https://t.me/SecretumHelp_bot" target="_blank" rel="noreferrer">
+                    Поддержка
+                  </a>
+                </div>
+              </div>
 
-            <div className="payment-box" data-reveal>
-              <p>Способы оплаты: карта, СБП, крипта</p>
-              <a href={TELEGRAM_PAY} target="_blank" rel="noreferrer">
-                Открыть @MysteriumTechBot
-              </a>
+              <div className="secretum-panel" data-reveal>
+                <p className="eyebrow">Mysterium</p>
+                <h2>
+                  Единая точка входа для подключения и поддержки <span style={{ color: "#40E0D0" }}>Mysterium</span>
+                </h2>
+                <p className="secretum-panel__text">
+                  Для начала подключите Proxy Telegram для доступа к боту и функциям Telegram.
+                </p>
+                <div className="secretum-panel__actions">
+                  <a className="cta" href={TELEGRAM_PROXY}>
+                    Proxy Telegram
+                  </a>
+                  <a className="cta" href={TELEGRAM_PAY} target="_blank" rel="noreferrer">
+                    Подключиться
+                  </a>
+                  <a className="cta" href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
+                    Поддержка
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="section service phase" id="bots">
-          <div className="container service__layout">
-            <div data-reveal>
-              <p className="eyebrow">Дополнительная услуга</p>
-              <h2>Разработка Telegram-ботов</h2>
-              <p>
-                Проектируем и запускаем ботов для продаж, поддержки и автоматизации заявок. Работаем под задачи
-                бизнеса и сопровождаем после релиза.
+        <section className="section phase" id="services">
+          <div className="container">
+            <div className="section__head" data-reveal>
+              <h2>Разработка сайтов и Телеграм ботов</h2>
+              <p className="services__text">
+                Разработаем для вас сайт или бота под ваши запросы, а также можем предложить комплексные решения для
+                вашей компании: подключение к нашим сервисам и облачному хранению данных. Пример того, как может
+                выглядеть продвинутая 3D-анимация, вы можете посмотреть, переключаясь между вариантами ниже.
               </p>
-              <a className="cta" href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
-                Написать нам
-              </a>
             </div>
-            <div className="service__tag" data-reveal>
-              <span>боты</span>
-            </div>
-          </div>
-        </section>
 
-        <section className="section service phase" id="sites">
-          <div className="container service__layout">
-            <div data-reveal>
-              <p className="eyebrow">Дополнительная услуга</p>
-              <h2>Разработка сайтов</h2>
-              <p>
-                Делаем современные сайты с сильным визуалом, грамотной структурой и понятной конверсией: от
-                лендингов до корпоративных проектов.
-              </p>
-              <a className="cta" href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
-                Написать нам
-              </a>
-            </div>
-            <div className="service__tag" data-reveal>
-              <span>web</span>
-            </div>
+            {SCENES.length > 1 && (
+              <div className="scene-selector">
+                {SCENES.map((s) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    className={`scene-selector__pill${activeScene === s.id ? " scene-selector__pill--active" : ""}`}
+                    onClick={() => setActiveScene(s.id)}
+                  >
+                    <span className="scene-selector__dot" />
+                    <span className="scene-selector__label">{s.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <a className="cta services__contact" href={TELEGRAM_CONTACT} target="_blank" rel="noreferrer">
+              Связаться с нами
+            </a>
           </div>
         </section>
       </main>
 
       <footer className="footer" id="contact">
         <div className="container footer__layout">
-          <p>© 2026 Mysterium Tech</p>
+          <p>© 2026 {PORTAL_NAME}</p>
           <div>
             <a href={TELEGRAM_PAY} target="_blank" rel="noreferrer">
               @MysteriumTechBot
@@ -258,6 +224,7 @@ export default function App() {
           </div>
         </div>
       </footer>
+
     </div>
   );
 }
