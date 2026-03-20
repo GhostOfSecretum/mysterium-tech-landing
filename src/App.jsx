@@ -65,19 +65,9 @@ export default function App() {
           </a>
 
           <nav className="desktop-nav">
-            <div className="nav-services">
-              <button type="button" className="nav-services__trigger">
-                Услуги
-              </button>
-              <div className="nav-services__menu">
-                <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
-                  Разработка ботов
-                </a>
-                <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
-                  Разработка сайтов
-                </a>
-              </div>
-            </div>
+            <a href="#secretum-main">Secretum</a>
+            <a href="#mysterium-main">Mysterium</a>
+            <a href="#services">Услуги</a>
           </nav>
 
           <a className="cta cta--small" href={TELEGRAM_PAY} target="_blank" rel="noreferrer">
@@ -88,7 +78,7 @@ export default function App() {
             type="button"
             className={`menu-btn ${menuOpen ? "menu-btn--open" : ""}`}
             onClick={() => setMenuOpen((value) => !value)}
-            aria-label="Открыть меню"
+            aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
           >
             <span />
             <span />
@@ -98,17 +88,20 @@ export default function App() {
 
       <div className={`mobile-nav ${menuOpen ? "mobile-nav--open" : ""}`}>
         <div className="mobile-nav__group">
-          <p>Услуги</p>
-          <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer" onClick={closeMenu}>
-            Разработка ботов
+          <p>Навигация</p>
+          <a href="#secretum-main" onClick={closeMenu}>
+            Secretum
+          </a>
+          <a href="#mysterium-main" onClick={closeMenu}>
+            Mysterium
+          </a>
+          <a href="#services" onClick={closeMenu}>
+            Услуги
           </a>
           <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer" onClick={closeMenu}>
-            Разработка сайтов
+            Поддержка
           </a>
         </div>
-        <a href={TELEGRAM_PAY} target="_blank" rel="noreferrer" onClick={closeMenu}>
-          Перейти к оплате
-        </a>
       </div>
 
       <main>
@@ -118,11 +111,11 @@ export default function App() {
               <p className="eyebrow">Единый портал поддержки клиентов</p>
               <h1>Управляй подписками и получай помощь в одном месте</h1>
               <div className="hero__actions">
-                <a className="cta" href={TELEGRAM_PAY} target="_blank" rel="noreferrer">
-                  Подключить VPN
+                <a className="cta" href="#secretum-main">
+                  Secretum
                 </a>
-                <a className="cta" href="https://t.me/SecretumHelp_bot" target="_blank" rel="noreferrer">
-                  Поддержка
+                <a className="cta" href="#mysterium-main">
+                  Mysterium
                 </a>
               </div>
             </div>
@@ -132,7 +125,7 @@ export default function App() {
         <section className="section section--secretum phase" id="secretum">
           <div className="container">
             <div className="secretum-stack">
-              <div className="secretum-panel" data-reveal>
+              <div className="secretum-panel" id="secretum-main" data-reveal>
                 <p className="eyebrow">Secretum</p>
                 <h2>
                   Единая точка входа для подключения и поддержки <span style={{ color: "#40E0D0" }}>Secretum</span>
@@ -153,7 +146,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="secretum-panel" data-reveal>
+              <div className="secretum-panel" id="mysterium-main" data-reveal>
                 <p className="eyebrow">Mysterium</p>
                 <h2>
                   Единая точка входа для подключения и поддержки <span style={{ color: "#40E0D0" }}>Mysterium</span>
