@@ -70,10 +70,6 @@ export default function App() {
             <a href="#services">Услуги</a>
           </nav>
 
-          <a className="cta cta--small" href={TELEGRAM_PAY} target="_blank" rel="noreferrer">
-            Оплатить в Telegram
-          </a>
-
           <button
             type="button"
             className={`menu-btn ${menuOpen ? "menu-btn--open" : ""}`}
@@ -203,20 +199,6 @@ export default function App() {
           </div>
         </section>
       </main>
-
-      <footer className="footer" id="contact">
-        <div className="container footer__layout">
-          <p>© 2026 {PORTAL_NAME}</p>
-          <div>
-            <a href={TELEGRAM_PAY} target="_blank" rel="noreferrer">
-              @MysteriumTechBot
-            </a>
-            <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
-              @SecretumHelp_bot
-            </a>
-          </div>
-        </div>
-      </footer>
 
     </div>
   );
