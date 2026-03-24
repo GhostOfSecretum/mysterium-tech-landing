@@ -6,7 +6,7 @@ const TELEGRAM_HELP = "https://t.me/SecretumHelp_bot";
 const TELEGRAM_CONTACT = "https://t.me/GhostOfSecretum";
 const TELEGRAM_PROXY =
   "tg://proxy?server=prox.secsoc.tech&port=443&secret=ee96887fbfcb117e0c8319f8fc0cfef61370726f782e736563736f632e74656368";
-const PORTAL_NAME = "Secretum & Mysterium Tech Portal";
+const PORTAL_NAME = "Mysterium Tech Portal";
 
 const SCENES = [
   { id: "grid", label: "Матрица" },
@@ -91,8 +91,8 @@ export default function App() {
           <a href="#services" onClick={closeMenu}>
             Услуги
           </a>
-          <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer" onClick={closeMenu}>
-            Поддержка
+          <a href={TELEGRAM_CONTACT} target="_blank" rel="noreferrer" onClick={closeMenu}>
+            Связаться с нами
           </a>
         </div>
       </div>
