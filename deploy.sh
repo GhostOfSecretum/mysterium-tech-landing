@@ -21,7 +21,8 @@ sleep 5
 
 # ─── Step 3: Obtain Let's Encrypt certificate ───
 echo "[3/4] Requesting SSL certificate from Let's Encrypt..."
-docker compose run --rm certbot certonly \
+docker compose run --rm --entrypoint "" certbot \
+    certbot certonly \
     --webroot \
     --webroot-path=/var/www/certbot \
     --email "$EMAIL" \

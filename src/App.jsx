@@ -13,6 +13,11 @@ const SCENES = [
   { id: "chrome", label: "Хром" },
   { id: "ripple", label: "Риппл" },
   { id: "streams", label: "Потоки" },
+  { id: "aurora", label: "Аврора" },
+  { id: "cyber", label: "Кибер" },
+  { id: "plasma", label: "Плазма" },
+  { id: "helix", label: "Спираль" },
+  { id: "gravity", label: "Гравитация" },
 ];
 
 export default function App() {
@@ -59,14 +64,12 @@ export default function App() {
 
       <header className={`topbar ${scrolled ? "topbar--scrolled" : ""}`}>
         <div className="topbar__inner">
-          <a className="brand" href="#hero" onClick={closeMenu}>
+          <a className="brand" href="#services" onClick={closeMenu}>
             <span className="brand__dot" />
             <span>{PORTAL_NAME}</span>
           </a>
 
           <nav className="desktop-nav">
-            <a href="#secretum-main">Secretum</a>
-            <a href="#mysterium-main">Mysterium</a>
             <a href="#services">Услуги</a>
           </nav>
 
@@ -85,12 +88,6 @@ export default function App() {
       <div className={`mobile-nav ${menuOpen ? "mobile-nav--open" : ""}`}>
         <div className="mobile-nav__group">
           <p>Навигация</p>
-          <a href="#secretum-main" onClick={closeMenu}>
-            Secretum
-          </a>
-          <a href="#mysterium-main" onClick={closeMenu}>
-            Mysterium
-          </a>
           <a href="#services" onClick={closeMenu}>
             Услуги
           </a>
@@ -101,71 +98,6 @@ export default function App() {
       </div>
 
       <main>
-        <section className="hero phase" id="hero">
-          <div className="container hero__layout">
-            <div className="hero__content" data-reveal>
-              <p className="eyebrow">Единый портал поддержки клиентов</p>
-              <h1>Управляй подписками и получай помощь в одном месте</h1>
-              <div className="hero__actions">
-                <a className="cta" href="#secretum-main">
-                  Secretum
-                </a>
-                <a className="cta" href="#mysterium-main">
-                  Mysterium
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section section--secretum phase" id="secretum">
-          <div className="container">
-            <div className="secretum-stack">
-              <div className="secretum-panel" id="secretum-main" data-reveal>
-                <p className="eyebrow">Secretum</p>
-                <h2>
-                  Единая точка входа для подключения и поддержки <span style={{ color: "#40E0D0" }}>Secretum</span>
-                </h2>
-                <p className="secretum-panel__text">
-                  Для начала подключите Proxy Telegram для доступа к боту и функциям Telegram.
-                </p>
-                <div className="secretum-panel__actions">
-                  <a className="cta" href={TELEGRAM_PROXY}>
-                    Proxy Telegram
-                  </a>
-                  <a className="cta" href="https://t.me/wgitzbot" target="_blank" rel="noreferrer">
-                    Подключиться
-                  </a>
-                  <a className="cta" href="https://t.me/SecretumHelp_bot" target="_blank" rel="noreferrer">
-                    Поддержка
-                  </a>
-                </div>
-              </div>
-
-              <div className="secretum-panel" id="mysterium-main" data-reveal>
-                <p className="eyebrow">Mysterium</p>
-                <h2>
-                  Единая точка входа для подключения и поддержки <span style={{ color: "#40E0D0" }}>Mysterium</span>
-                </h2>
-                <p className="secretum-panel__text">
-                  Для начала подключите Proxy Telegram для доступа к боту и функциям Telegram.
-                </p>
-                <div className="secretum-panel__actions">
-                  <a className="cta" href={TELEGRAM_PROXY}>
-                    Proxy Telegram
-                  </a>
-                  <a className="cta" href={TELEGRAM_PAY} target="_blank" rel="noreferrer">
-                    Подключиться
-                  </a>
-                  <a className="cta" href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
-                    Поддержка
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section className="section phase" id="services">
           <div className="container">
             <div className="section__head" data-reveal>

@@ -6,6 +6,11 @@ const scenes = {
   ripple: lazy(() => import("./scenes/ChromeRippleScene")),
   streams: lazy(() => import("./scenes/DataStreamsScene")),
   grid: lazy(() => import("./scenes/CryptoGridScene")),
+  aurora: lazy(() => import("./scenes/AuroraVortexScene")),
+  cyber: lazy(() => import("./scenes/CyberSphereScene")),
+  plasma: lazy(() => import("./scenes/PlasmaFieldScene")),
+  helix: lazy(() => import("./scenes/NeonHelixScene")),
+  gravity: lazy(() => import("./scenes/GravityWellScene")),
 };
 
 export default function SceneSwitcher({ activeScene = "grid" }) {
