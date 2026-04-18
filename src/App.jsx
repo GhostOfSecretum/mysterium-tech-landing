@@ -13,11 +13,6 @@ const SCENES = [
   { id: "chrome", label: "Хром" },
   { id: "ripple", label: "Риппл" },
   { id: "streams", label: "Потоки" },
-  { id: "aurora", label: "Аврора" },
-  { id: "cyber", label: "Кибер" },
-  { id: "plasma", label: "Плазма" },
-  { id: "helix", label: "Спираль" },
-  { id: "gravity", label: "Гравитация" },
 ];
 
 export default function App() {
