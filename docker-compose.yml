@@ -12,6 +12,18 @@ services:
       - "443:443"
     depends_on:
       - certbot
+      - contact-api
+
+  contact-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.contact
+    container_name: mysterium-contact-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    expose:
+      - "8787"
 
   certbot:
     image: certbot/certbot:latest

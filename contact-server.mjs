@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const PORT = Number(process.env.LOCAL_LLM_PORT || 8787);
+const PORT = Number(process.env.CONTACT_SERVER_PORT || process.env.LOCAL_LLM_PORT || 8787);
 
 async function loadEnvFile() {
   const envPath = path.resolve(__dirname, ".env");
@@ -37,7 +37,7 @@ function sendJson(res, statusCode, payload) {
   res.writeHead(statusCode, {
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST,OPTIONS",
+    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   });
   res.end(JSON.stringify(payload));
@@ -117,6 +117,11 @@ async function sendTelegramMessage(payload) {
 
 const server = createServer(async (req, res) => {
   if (req.method === "OPTIONS") {
+    sendJson(res, 200, { ok: true });
+    return;
+  }
+
+  if (req.method === "GET" && req.url === "/api/contact/health") {
     sendJson(res, 200, { ok: true });
     return;
   }
