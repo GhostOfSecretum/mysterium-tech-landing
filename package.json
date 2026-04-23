@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "llm:server": "node server/local-llm-server.mjs",
+    "contact:server": "node contact-server.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },
