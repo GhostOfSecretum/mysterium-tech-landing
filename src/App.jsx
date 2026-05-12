@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import SceneSwitcher from "./components/SceneSwitcher.jsx";
 import ContactForm from "./components/ContactForm.jsx";
 import AdminPanel from "./components/AdminPanel.jsx";
+import cleanProPreview from "./assets/cleanpro-preview.png";
+import skinsheadPreview from "./assets/skinshead-preview.png";
 
-const TELEGRAM_HELP = "https://t.me/SecretumHelp_bot";
 const TELEGRAM_CONTACT = "https://t.me/GhostOfSecretum";
 
 const SCENES = [
@@ -37,6 +38,25 @@ const SERVICES = [
     code: "SEC",
     title: "Услуги по безопасности",
     desc: "Аудит инфраструктуры, защита от угроз, настройка защищенных каналов связи и сопровождение рабочих процессов.",
+  },
+];
+
+const WORKS = [
+  {
+    id: "clean-pro",
+    title: "CleanPro Miami",
+    url: "https://clean-pro-miami.vercel.app/",
+    description: "Лендинг клинингового сервиса с сильной упаковкой оффера, KPI-блоками и продуманной конверсией в заявку.",
+    accent: "Сервисный лендинг",
+    preview: cleanProPreview,
+  },
+  {
+    id: "skinshead",
+    title: "Skinshead",
+    url: "https://skinshead.pro",
+    description: "Минималистичный продуктовый сайт с упором на цифровой актив, доверие к сервису и быстрый переход к действию.",
+    accent: "Продуктовый сайт",
+    preview: skinsheadPreview,
   },
 ];
 
@@ -97,14 +117,30 @@ export default function App() {
             <span>Mysterium Tech</span>
           </a>
 
-          <nav className="desktop-nav">
-            <a href="#services">Услуги</a>
-            <a href="#demo">3D</a>
-            <a href="#contact">Заявка</a>
-            <a href={TELEGRAM_CONTACT} target="_blank" rel="noreferrer">
-              Telegram
-            </a>
-          </nav>
+          <div className="topbar__controls">
+            <div className="topbar-scene-selector" aria-label="Выбор 3D-сцены">
+              {SCENES.map((scene) => (
+                <button
+                  key={scene.id}
+                  type="button"
+                  className={`topbar-scene-selector__pill${activeScene === scene.id ? " topbar-scene-selector__pill--active" : ""}`}
+                  onClick={() => setActiveScene(scene.id)}
+                >
+                  <span className="topbar-scene-selector__dot" />
+                  <span className="topbar-scene-selector__label">{scene.label}</span>
+                </button>
+              ))}
+            </div>
+
+            <nav className="desktop-nav">
+              <a href="#services">Услуги</a>
+              <a href="#demo">Работы</a>
+              <a href="#contact">Заявка</a>
+              <a href={TELEGRAM_CONTACT} target="_blank" rel="noreferrer">
+                Telegram
+              </a>
+            </nav>
+          </div>
 
           <button
             type="button"
@@ -123,9 +159,6 @@ export default function App() {
           <p>Навигация</p>
           <a href="#services" onClick={closeMenu}>
             Услуги
-          </a>
-          <a href="#demo" onClick={closeMenu}>
-            3D
           </a>
           <a href="#contact" onClick={closeMenu}>
             Оставить заявку
@@ -201,31 +234,42 @@ export default function App() {
         <section className="section section--demo" id="demo">
           <div className="container">
             <div className="section__head" data-reveal>
-              <p className="eyebrow">Визуальный блок</p>
-              <h2>Пример продвинутой 3D-анимации</h2>
+              <p className="eyebrow">Портфолио</p>
+              <h2>Примеры наших работ</h2>
               <p className="services__text">
-                Интерактивные сцены помогают задать характер проекту: от технологичного лендинга до выразительной
-                продуктовой презентации. Переключайте варианты и смотрите, какая подача ближе вашему стилю.
+                Ниже два живых примера. Каждый блок можно открыть и посмотреть сайт целиком, чтобы оценить визуальную
+                подачу, структуру и уровень проработки интерфейса.
               </p>
             </div>
 
-            <div className="scene-selector" data-reveal>
-              {SCENES.map((scene) => (
-                <button
-                  key={scene.id}
-                  type="button"
-                  className={`scene-selector__pill${activeScene === scene.id ? " scene-selector__pill--active" : ""}`}
-                  onClick={() => setActiveScene(scene.id)}
-                >
-                  <span className="scene-selector__dot" />
-                  <span className="scene-selector__label">{scene.label}</span>
-                </button>
+            <div className="works-grid" data-reveal>
+              {WORKS.map((work) => (
+                <a className="work-card" key={work.id} href={work.url} target="_blank" rel="noreferrer">
+                  <div className="work-card__topline">
+                    <span className="work-card__eyebrow">{work.accent}</span>
+                  </div>
+
+                  <div className="work-card__window">
+                    <div className="work-card__toolbar">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                    <div
+                      className="work-card__preview"
+                      style={{ backgroundImage: `url(${work.preview})` }}
+                      aria-hidden="true"
+                    />
+                  </div>
+
+                  <div className="work-card__content">
+                    <h3>{work.title}</h3>
+                    <p>{work.description}</p>
+                    <span className="work-card__cta">Открыть сайт</span>
+                  </div>
+                </a>
               ))}
             </div>
-
-            <a className="cta services__contact" href={TELEGRAM_CONTACT} target="_blank" rel="noreferrer" data-reveal>
-              Связаться с нами
-            </a>
           </div>
         </section>
 
@@ -249,14 +293,6 @@ export default function App() {
                   <p>Если хотите обсудить проект без формы, можно сразу перейти в Telegram.</p>
                   <a href={TELEGRAM_CONTACT} target="_blank" rel="noreferrer">
                     @GhostOfSecretum
-                  </a>
-                </div>
-
-                <div className="contact-card">
-                  <h4>Поддержка</h4>
-                  <p>Для технических вопросов и сопровождения услуг остается отдельный контакт поддержки.</p>
-                  <a href={TELEGRAM_HELP} target="_blank" rel="noreferrer">
-                    @SecretumHelp_bot
                   </a>
                 </div>
               </aside>
