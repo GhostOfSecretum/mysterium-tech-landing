@@ -5,6 +5,7 @@ import AdminPanel from "./components/AdminPanel.jsx";
 import cleanProPreview from "./assets/cleanpro-preview.png";
 import skinsheadPreview from "./assets/skinshead-preview.png";
 import tigerProPreview from "./assets/tiger-pro-preview.png";
+import mysteriumTechIcon from "./assets/mysterium-tech-icon.png";
 
 const TELEGRAM_CONTACT = "https://t.me/GhostOfSecretum";
 
@@ -122,7 +123,7 @@ export default function App() {
       <header className={`topbar${scrolled ? " topbar--scrolled" : ""}`}>
         <div className="topbar__inner">
           <a className="brand" href="#hero" onClick={closeMenu}>
-            <span className="brand__dot" />
+            <img className="brand__dot" src={mysteriumTechIcon} alt="" aria-hidden="true" />
             <span>Mysterium Tech</span>
           </a>
 
@@ -313,7 +314,7 @@ export default function App() {
       <footer className="footer">
         <div className="footer__layout">
           <a className="brand" href="#hero">
-            <span className="brand__dot" />
+            <img className="brand__dot" src={mysteriumTechIcon} alt="" aria-hidden="true" />
             <span>Mysterium Tech</span>
           </a>
           <p>© 2026 Mysterium Tech</p>

@@ -105,17 +105,16 @@ a { color: inherit; text-decoration: none; }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   font-family: "Unbounded", sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.08rem;
   font-weight: 700;
 }
 .brand__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 16px rgba(64, 224, 208, 0.6);
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(64, 224, 208, 0.62));
   flex-shrink: 0;
 }
 
