@@ -124,7 +124,7 @@ export default function App() {
         <div className="topbar__inner">
           <a className="brand" href="#hero" onClick={closeMenu}>
             <img className="brand__dot" src={mysteriumTechIcon} alt="" aria-hidden="true" />
-            <span>Mysterium Tech</span>
+            <span>Mysterium Tech Portal</span>
           </a>
 
           <div className="topbar__controls">
