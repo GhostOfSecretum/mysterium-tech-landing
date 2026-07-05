@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import SceneSwitcher from "./components/SceneSwitcher.jsx";
 import ContactForm from "./components/ContactForm.jsx";
 import AdminPanel from "./components/AdminPanel.jsx";
-import cleanProPreview from "./assets/cleanpro-preview.png";
+import cleanProMondrianPreview from "./assets/cleanpro-mondrian-preview.png";
 import skinsheadPreview from "./assets/skinshead-preview.png";
 import tigerProPreview from "./assets/tiger-pro-preview.png";
 import mysteriumTechIcon from "./assets/mysterium-tech-icon.png";
@@ -47,18 +47,10 @@ const WORKS = [
   {
     id: "clean-pro",
     title: "CleanPro Miami",
-    url: "https://clean-pro-miami.vercel.app/",
+    url: "https://clean-pro-miami.vercel.app/mondrian-hb-rentals#prices",
     description: "Лендинг клинингового сервиса с сильной упаковкой оффера, KPI-блоками и продуманной конверсией в заявку.",
     accent: "Сервисный лендинг",
-    preview: cleanProPreview,
-  },
-  {
-    id: "skinshead",
-    title: "Skinshead",
-    url: "https://skinshead.pro",
-    description: "Минималистичный продуктовый сайт с упором на цифровой актив, доверие к сервису и быстрый переход к действию.",
-    accent: "Продуктовый сайт",
-    preview: skinsheadPreview,
+    preview: cleanProMondrianPreview,
   },
   {
     id: "tiger-pro",
@@ -67,6 +59,14 @@ const WORKS = [
     description: "Брутальный лендинг для подрядчика по благоустройству, аренде спецтехники и вывозу грунта с сильным hero-блоком.",
     accent: "Корпоративный лендинг",
     preview: tigerProPreview,
+  },
+  {
+    id: "skinshead",
+    title: "Skinshead",
+    url: "https://skinshead.pro",
+    description: "Минималистичный продуктовый сайт с упором на цифровой актив, доверие к сервису и быстрый переход к действию.",
+    accent: "Продуктовый сайт",
+    preview: skinsheadPreview,
   },
 ];
 
