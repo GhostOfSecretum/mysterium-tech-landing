@@ -4,6 +4,7 @@ import ContactForm from "./components/ContactForm.jsx";
 import AdminPanel from "./components/AdminPanel.jsx";
 import cleanProPreview from "./assets/cleanpro-preview.png";
 import skinsheadPreview from "./assets/skinshead-preview.png";
+import tigerProPreview from "./assets/tiger-pro-preview.png";
 
 const TELEGRAM_CONTACT = "https://t.me/GhostOfSecretum";
 
@@ -57,6 +58,14 @@ const WORKS = [
     description: "Минималистичный продуктовый сайт с упором на цифровой актив, доверие к сервису и быстрый переход к действию.",
     accent: "Продуктовый сайт",
     preview: skinsheadPreview,
+  },
+  {
+    id: "tiger-pro",
+    title: "Tiger Pro",
+    url: "https://tiger-pro.tech/",
+    description: "Брутальный лендинг для подрядчика по благоустройству, аренде спецтехники и вывозу грунта с сильным hero-блоком.",
+    accent: "Корпоративный лендинг",
+    preview: tigerProPreview,
   },
 ];
 
@@ -237,7 +246,7 @@ export default function App() {
               <p className="eyebrow">Портфолио</p>
               <h2>Примеры наших работ</h2>
               <p className="services__text">
-                Ниже два живых примера. Каждый блок можно открыть и посмотреть сайт целиком, чтобы оценить визуальную
+                Ниже три живых примера. Каждый блок можно открыть и посмотреть сайт целиком, чтобы оценить визуальную
                 подачу, структуру и уровень проработки интерфейса.
               </p>
             </div>
