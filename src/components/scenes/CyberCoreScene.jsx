@@ -440,15 +440,19 @@ function CyberCore({ glowMap, spinRef }) {
 /* ---------- маленькие стеклянные спутники вокруг главного ядра ---------- */
 
 const ORBIT_MOONS = [
-  { radius: 3.6, size: 0.55, speed: 0.12, phase: 0.2, tilt: 0.45, elev: 0.35, tint: "#2E5CFF", core: "#7B2FFF" },
-  { radius: 4.4, size: 0.38, speed: -0.09, phase: 1.8, tilt: -0.55, elev: -0.2, tint: "#7B2FFF", core: "#00E5D0" },
-  { radius: 5.1, size: 0.72, speed: 0.07, phase: 3.4, tilt: 0.25, elev: 0.55, tint: "#00E5D0", core: "#2E5CFF" },
-  { radius: 5.8, size: 0.32, speed: -0.14, phase: 4.9, tilt: 0.7, elev: -0.45, tint: "#2E5CFF", core: "#00E5D0" },
-  { radius: 6.5, size: 0.48, speed: 0.06, phase: 2.6, tilt: -0.35, elev: 0.15, tint: "#7B2FFF", core: "#2E5CFF" },
-  { radius: 7.2, size: 0.28, speed: -0.1, phase: 5.7, tilt: 0.15, elev: 0.7, tint: "#00E5D0", core: "#7B2FFF" },
+  { radius: 3.6, size: 0.55, speed: 0.28, phase: 0.2, tilt: 0.45, elev: 0.35, dir: 1, tint: "#2E5CFF", core: "#7B2FFF" },
+  { radius: 4.4, size: 0.38, speed: 0.22, phase: 1.8, tilt: -0.55, elev: -0.2, dir: -1, tint: "#7B2FFF", core: "#00E5D0" },
+  { radius: 5.1, size: 0.72, speed: 0.18, phase: 3.4, tilt: 0.25, elev: 0.55, dir: 1, tint: "#00E5D0", core: "#2E5CFF" },
+  { radius: 5.8, size: 0.32, speed: 0.32, phase: 4.9, tilt: 0.7, elev: -0.45, dir: -1, tint: "#2E5CFF", core: "#00E5D0" },
+  { radius: 6.5, size: 0.48, speed: 0.15, phase: 2.6, tilt: -0.35, elev: 0.15, dir: 1, tint: "#7B2FFF", core: "#2E5CFF" },
+  { radius: 7.2, size: 0.28, speed: 0.24, phase: 5.7, tilt: 0.15, elev: 0.7, dir: -1, tint: "#00E5D0", core: "#7B2FFF" },
 ];
 
-function OrbitMoon({ moon, glowMap, index }) {
+const MOON_ORBIT_SENSITIVITY = 2.4; // насколько сильно курсор крутит орбиту
+const MOON_ORBIT_DECAY = 0.94; // инерция орбиты после движения мыши
+const MOON_ORBIT_MAX_VEL = 3.2;
+
+function OrbitMoon({ moon, glowMap, index, moonOrbitRef }) {
   const orbitRef = useRef();
   const bodyRef = useRef();
   const coreMatRef = useRef();
@@ -462,18 +466,22 @@ function OrbitMoon({ moon, glowMap, index }) {
 
   useFrame((state, delta) => {
     const t = state.clock.getElapsedTime();
-    const angle = moon.phase + t * moon.speed;
+    const cursorAngle = moonOrbitRef?.current?.angle ?? 0;
+    // своя постоянная орбита + дополнительный угол от курсора (часть шаров — против часовой)
+    const angle = moon.phase + t * moon.speed * moon.dir + cursorAngle * moon.dir;
 
     if (orbitRef.current) {
       const x = Math.cos(angle) * moon.radius;
       const z = Math.sin(angle) * moon.radius * Math.cos(moon.tilt);
-      const y = Math.sin(angle) * moon.radius * Math.sin(moon.tilt) + moon.elev + Math.sin(t * 0.35 + index) * 0.06;
+      const y = Math.sin(angle) * moon.radius * Math.sin(moon.tilt) + moon.elev + Math.sin(t * 0.45 + index) * 0.08;
       orbitRef.current.position.set(x, y, z);
     }
 
     if (bodyRef.current) {
-      bodyRef.current.rotation.y += delta * (0.2 + Math.abs(moon.speed) * 0.5);
-      bodyRef.current.rotation.x += delta * 0.08 * Math.sign(moon.speed || 1);
+      const orbitVel = Math.abs(moonOrbitRef?.current?.velocity ?? 0);
+      // вращение вокруг своей оси + чуть быстрее, когда курсор крутит орбиту
+      bodyRef.current.rotation.y += delta * (0.45 + Math.abs(moon.speed) + orbitVel * 0.4) * moon.dir;
+      bodyRef.current.rotation.x += delta * 0.12 * moon.dir;
     }
 
     if (coreMatRef.current) {
@@ -540,11 +548,11 @@ function OrbitMoon({ moon, glowMap, index }) {
   );
 }
 
-function OrbitMoons({ glowMap }) {
+function OrbitMoons({ glowMap, moonOrbitRef }) {
   return (
     <group>
       {ORBIT_MOONS.map((moon, i) => (
-        <OrbitMoon key={i} moon={moon} glowMap={glowMap} index={i} />
+        <OrbitMoon key={i} moon={moon} glowMap={glowMap} index={i} moonOrbitRef={moonOrbitRef} />
       ))}
     </group>
   );
@@ -618,6 +626,7 @@ export default function CyberCoreScene() {
   const smoothGlow = useRef({ x: 0, y: 0 });
   const smoothMoons = useRef({ x: 0, y: 0 });
   const spinRef = useRef({ speed: BASE_SPIN });
+  const moonOrbitRef = useRef({ angle: 0, velocity: 0 });
 
   const glowMap = useMemo(() => makeGlowTexture(), []);
 
@@ -716,13 +725,27 @@ export default function CyberCoreScene() {
       }
     }
 
-    // спутники: слабый параллакс (~25% от ядра), почти без наклона — не «летают» от мыши/скролла
+    // орбита спутников крутится от движения курсора (с инерцией)
+    {
+      const orbit = moonOrbitRef.current;
+      // горизонталь — основной вклад, вертикаль — чуть слабее
+      const impulse = mouseDx * MOON_ORBIT_SENSITIVITY + mouseDy * MOON_ORBIT_SENSITIVITY * 0.45;
+      orbit.velocity = THREE.MathUtils.clamp(
+        orbit.velocity + impulse,
+        -MOON_ORBIT_MAX_VEL,
+        MOON_ORBIT_MAX_VEL,
+      );
+      orbit.velocity *= MOON_ORBIT_DECAY;
+      orbit.angle += orbit.velocity * dt;
+    }
+
+    // спутники: слабый параллакс, центр держим у большого шара
     if (moonsRef.current) {
       moonsRef.current.position.x = 0.6 + smoothMoons.current.x * 0.12;
       moonsRef.current.position.y = 0.2 + Math.sin(scroll * Math.PI) * 0.12 + smoothMoons.current.y * 0.04;
       moonsRef.current.position.z = 2 - scroll * 0.12;
-      moonsRef.current.rotation.x = -smoothMoons.current.y * MAX_TILT * 0.18 + scroll * 0.04;
-      moonsRef.current.rotation.y = smoothMoons.current.x * MAX_TILT * 0.18 + scroll * 0.12;
+      moonsRef.current.rotation.x = -smoothMoons.current.y * MAX_TILT * 0.12 + scroll * 0.04;
+      moonsRef.current.rotation.y = smoothMoons.current.x * MAX_TILT * 0.12 + scroll * 0.08;
       moonsRef.current.scale.setScalar(1 - scroll * 0.02);
     }
 
@@ -761,7 +784,7 @@ export default function CyberCoreScene() {
       </group>
 
       <group ref={moonsRef} position={[0.6, 0.2, 2]}>
-        <OrbitMoons glowMap={glowMap} />
+        <OrbitMoons glowMap={glowMap} moonOrbitRef={moonOrbitRef} />
       </group>
 
       <group ref={glowLayerRef} position={[0.6, 0.2, 2]}>
