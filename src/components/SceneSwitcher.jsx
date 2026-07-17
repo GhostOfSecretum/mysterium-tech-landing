@@ -2,14 +2,15 @@ import { Suspense, lazy } from "react";
 import { Canvas } from "@react-three/fiber";
 
 const scenes = {
+  cybercore: lazy(() => import("./scenes/CyberCoreScene")),
   chrome: lazy(() => import("./scenes/ChromeLuxuryScene")),
   ripple: lazy(() => import("./scenes/ChromeRippleScene")),
   streams: lazy(() => import("./scenes/DataStreamsScene")),
   grid: lazy(() => import("./scenes/CryptoGridScene")),
 };
 
-export default function SceneSwitcher({ activeScene = "grid" }) {
-  const SceneComponent = scenes[activeScene] ?? scenes.grid;
+export default function SceneSwitcher({ activeScene = "cybercore" }) {
+  const SceneComponent = scenes[activeScene] ?? scenes.cybercore;
 
   return (
     <div className="scene-shell" aria-hidden="true">

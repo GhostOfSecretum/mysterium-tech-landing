@@ -10,6 +10,7 @@ import mysteriumTechIcon from "./assets/mysterium-tech-icon.png";
 const TELEGRAM_CONTACT = "https://t.me/GhostOfSecretum";
 
 const SCENES = [
+  { id: "cybercore", label: "Кибер-ядро" },
   { id: "grid", label: "Матрица" },
   { id: "chrome", label: "Хром" },
   { id: "ripple", label: "Риппл" },
@@ -73,7 +74,7 @@ const WORKS = [
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeScene, setActiveScene] = useState("grid");
+  const [activeScene, setActiveScene] = useState("cybercore");
   const [showAdmin, setShowAdmin] = useState(false);
 
   useEffect(() => {
